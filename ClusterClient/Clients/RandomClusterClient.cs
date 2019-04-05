@@ -11,27 +11,24 @@ namespace ClusterClient.Clients
         public RandomClusterClient(string[] replicaAddresses)
             : base(replicaAddresses)
         {
-
         }
 
         public override async Task<string> ProcessRequestAsync(string query, TimeSpan timeout)
         {
             var uri = ReplicaAddresses[random.Next(ReplicaAddresses.Length)];
-            var webRequest = CreateRequest(uri + "?query=" + query);
-            
-            Log.InfoFormat("Processing {0}", webRequest.RequestUri);
+            var webRequest = CreateRequest($"{uri}?query={query}");
+
+            Log.InfoFormat($"Processing {webRequest.RequestUri}");
 
             var resultTask = ProcessRequestAsync(webRequest);
             await Task.WhenAny(resultTask, Task.Delay(timeout));
+
             if (!resultTask.IsCompleted)
                 throw new TimeoutException();
 
             return resultTask.Result;
         }
 
-        protected override ILog Log
-        {
-            get { return LogManager.GetLogger(typeof(RandomClusterClient)); }
-        }
+        protected override ILog Log => LogManager.GetLogger(typeof(RandomClusterClient));
     }
 }

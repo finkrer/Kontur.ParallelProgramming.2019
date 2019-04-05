@@ -3,7 +3,7 @@ using System.Net;
 using System.Threading.Tasks;
 using log4net;
 
-namespace ClusterServer
+namespace Cluster
 {
 	public static class HttpListenerExtensions
 	{
@@ -15,6 +15,9 @@ namespace ClusterServer
 
 			while (true)
 			{
+                if (!listener.IsListening)
+                    return;
+
 				try
 				{
 					var context = await listener.GetContextAsync();
@@ -29,7 +32,7 @@ namespace ClusterServer
 									}
 									catch (Exception e)
 									{
-										Log.Error(e);
+										Console.WriteLine(e);
 									}
 									finally
 									{
@@ -53,6 +56,9 @@ namespace ClusterServer
 			{
 				try
 				{
+					if (!listener.IsListening)
+						return;
+
 					var context = listener.GetContext();
 
 					try

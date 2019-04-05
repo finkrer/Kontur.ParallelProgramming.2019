@@ -51,6 +51,10 @@
   <ItemGroup>
     <Compile Include="Clients\ClusterClientBase.cs" />
     <Compile Include="Clients\RandomClusterClient.cs" />
+    <Compile Include="Clients\RoundRobinClusterClient.cs" />
+    <Compile Include="Clients\SimultaneousClusterClient.cs" />
+    <Compile Include="Clients\SmartClusterClient.cs" />
+    <Compile Include="Helpers.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
